@@ -8,7 +8,7 @@ import time
 
 
 class AvitoParser:
-    def __init__(self, url, driver_version="122.0.6261.95"):
+    def __init__(self, url, ads_number, driver_version="122.0.6261.95"):
         # URL:
         self.url = url
         # web-driver options:
@@ -23,8 +23,8 @@ class AvitoParser:
                                        options=self.options)
         # init pages of sites:
         self.site_pages = []
-        # init ads array:
-        self.ads = []
+        # number of ads:
+        self.ads_number = ads_number
 
     # get requests on avito page:
     def get_requests(self):
@@ -41,35 +41,35 @@ class AvitoParser:
         time.sleep(10)
 
     # this method find on page info of sector:
-    def get_sector_info(self):
+    def get_sector_info(self, ads):
         sector_info = self.driver.find_elements(By.XPATH, "//h1[@data-marker='item-view/title-info']")
         time.sleep(10)
         for word in range(len(Token_words)):
             if not(Token_words[word] in sector_info[0].text):
-                self.ads.append(sector_info[0].text)
+                ads.append(sector_info[0].text)
             else:
-                self.ads.append(None)
+                ads.append(None)
 
     # this method return sale of sector:
-    def get_sale(self):
+    def get_sale(self, ads):
         sector_sale = self.driver.find_elements(By.CLASS_NAME, "style-item-price-sub-price-_5RUD")
-        self.ads.append(sector_sale[0].text[:-9])
+        ads.append(sector_sale[0].text[:-9])
         time.sleep(10)
 
-    def get_area(self):
+    def get_area(self, ads):
         area = self.driver.find_elements(By.CLASS_NAME, "params-paramsList__item-_2Y2O")
-        self.ads.append(area[0].text[9:12])
+        ads.append(area[0].text[9:12])
         time.sleep(10)
 
     # this method return address of sector:
-    def get_location(self):
+    def get_location(self, ads):
         location = self.driver.find_elements(By.CLASS_NAME, "style-item-address__string-wt61A")
-        self.ads.append(location[0].text)
+        ads.append(location[0].text)
         time.sleep(10)
 
     # this method return current URL of page ads:
-    def get_url(self):
-        self.ads.append(self.driver.current_url)
+    def get_url(self, ads):
+        ads.append(self.driver.current_url)
 
     # this method close sector window ads:
     def close_window(self):
@@ -80,22 +80,26 @@ class AvitoParser:
     # parse avito page:
     def get_parse(self):
         try:
-            for i in range(7):
+            i = 0
+            while i < self.ads_number:
+                # ads array:
+                ads = []
                 self.get_requests()
                 self.click_ads_window(i)
-                self.get_sector_info()
-                if not(self.ads[0] == None):
-                    self.get_sale()
-                    self.get_area()
-                    self.get_location()
-                    self.get_url()
+                self.get_sector_info(ads=ads)
+                if not(ads[0] == None):
+                    self.get_sale(ads=ads)
+                    self.get_area(ads=ads)
+                    self.get_location(ads=ads)
+                    self.get_url(ads=ads)
                     self.close_window()
                     # append ads page in table:
-                    self.site_pages.append(self.ads)
+                    self.site_pages.append(ads)
                 else:
-                    self.ads.pop(0)
+                    ads.pop(0)
                     # close window:
                     self.close_window()
+                i += 1
         except Exception as _ex:
             print(_ex)
         finally:
@@ -104,7 +108,7 @@ class AvitoParser:
 
         return self.site_pages
 
-
-avito = AvitoParser(URL)
-ads = avito.get_parse()
+# example of using:
+avito_parser = AvitoParser(url=URL, ads_number=10)
+ads = avito_parser.get_parse()
 print(ads)
