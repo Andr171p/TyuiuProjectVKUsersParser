@@ -67,6 +67,12 @@ class AvitoParser:
         ads.append(location[0].text)
         time.sleep(10)
 
+    # this method return datetime of sector ads:
+    def get_datetime(self, ads):
+        ads_datetime = self.driver.find_elements(By.XPATH, "//span[@data-marker='item-view/item-date']")
+        ads.append(ads_datetime[0].text)
+        time.sleep(10)
+
     # this method return current URL of page ads:
     def get_url(self, ads):
         ads.append(self.driver.current_url)
@@ -91,6 +97,7 @@ class AvitoParser:
                     self.get_sale(ads=ads)
                     self.get_area(ads=ads)
                     self.get_location(ads=ads)
+                    self.get_datetime(ads=ads)
                     self.get_url(ads=ads)
                     self.close_window()
                     # append ads page in table:
