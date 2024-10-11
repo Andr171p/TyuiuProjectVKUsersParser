@@ -1,16 +1,9 @@
 from parser.vk.auth.session import VkSession
-from parser.vk.schemas.candidate_schema import CandidateSchema
+from parser.vk.search_user import VkSearchUsers
+from parser.vk.schemas.user_schema import VkUserSchema
 
 
-class VkCandidateParser:
-    vk_session = VkSession
-    vk = vk_session.session()
+class VkUserParser(VkSearchUsers):
 
-    def __init__(self, name: str, surname: str, age: int, city: str) -> None:
-        self.name = name
-        self.surname = surname
-        self.age = age
-        self.city = city
-
-    def get_candidate(self) -> CandidateSchema:
+    def get_candidate(self) -> VkUserSchema:
         ...

@@ -1,6 +1,7 @@
 
 
-class CandidateSchema:
+class VkUserSchema:
+    user_id: int | None = None
     name: str | None = None
     surname: str | None = None
     age: int | None = None
@@ -11,8 +12,9 @@ class CandidateSchema:
 
     @classmethod
     def add(
-            cls, name: str, surname: str, age: int, city: str, posts: list, groups: list, subscriptions: list
+            cls, user_id: int, name: str, surname: str, age: int, city: str, posts: list, groups: list, subscriptions: list
     ) -> None:
+        cls.user_id = user_id
         cls.name = name
         cls.surname = surname
         cls.age = age
@@ -23,6 +25,7 @@ class CandidateSchema:
 
     @classmethod
     def clear(cls) -> None:
+        cls.user_id = None
         cls.name = None
         cls.surname = None
         cls.age = None
@@ -33,6 +36,7 @@ class CandidateSchema:
 
     def __repr__(self) -> str:
         candidate = (f"Candidate(\n"
+                     f"user_id={self.user_id!r}"
                      f"name={self.name!r}\n"
                      f"surname={self.surname!r}\n"
                      f"age={self.age!r}\n"

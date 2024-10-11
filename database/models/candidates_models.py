@@ -12,4 +12,13 @@ class Base(DeclarativeBase):
 
 
 class AbstractModel(AsyncAttrs, Base):
-    __tablename__ = ''
+    __tablename__ = 'candidates'
+
+    id: Mapped[int] = mapped_column(
+        autoincrement=True,
+        primary_key=True
+    )
+
+
+class CandidatesModel(AbstractModel):
+    ...
