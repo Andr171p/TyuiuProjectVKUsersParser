@@ -6,13 +6,13 @@ class VkUserSchema:
     surname: str | None = None
     age: int | None = None
     city: str | None = None
-    posts: list | None = None
-    groups: list | None = None
-    subscriptions: list | None = None
+    posts: dict | None = None
+    groups: dict | None = None
+    subscriptions: dict | None = None
 
     @classmethod
     def add(
-            cls, user_id: int, name: str, surname: str, age: int, city: str, posts: list, groups: list, subscriptions: list
+            cls, user_id: int, name: str, surname: str, age: int, city: str, posts: dict, groups: dict, subscriptions: dict
     ) -> None:
         cls.user_id = user_id
         cls.name = name
@@ -34,8 +34,8 @@ class VkUserSchema:
         cls.groups = None
         cls.subscriptions = None
 
-    def __repr__(self) -> str:
-        candidate = (f"Candidate(\n"
+    def __str__(self) -> str:
+        user = (f"User(\n"
                      f"user_id={self.user_id!r}"
                      f"name={self.name!r}\n"
                      f"surname={self.surname!r}\n"
@@ -45,4 +45,4 @@ class VkUserSchema:
                      f"groups={self.groups!r}\n"
                      f"subscriptions={self.subscriptions!r}\n"
                      f")")
-        return candidate
+        return user

@@ -1,4 +1,4 @@
-from parser.vk.schemas.primary_schema import VkPrimaryUserSchema
+from parser.vk.schemas.primary_user_schema import VkPrimaryUserSchema
 
 
 class VkAssertUser:

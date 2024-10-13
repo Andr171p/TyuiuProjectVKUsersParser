@@ -1,20 +1,19 @@
 from parser.vk.auth.session import VkSession
-from parser.vk.schemas.primary_schema import VkPrimaryUserSchema
+from parser.vk.schemas.primary_user_schema import VkPrimaryUserSchema
 
 from loguru import logger
 
 
 class VkSearchUsers:
-    vk_session = VkSession
-    vk = vk_session.session()
 
-    def __init__(self, user: VkPrimaryUserSchema) -> None:
+    def __init__(self, user: VkPrimaryUserSchema, vk: VkSession.session) -> None:
         self.user = user
+        self.vk = vk
 
-    def search_user(self) -> dict:
+    def search_users(self) -> dict:
         users = self.vk.users.search(
             q=f"{self.user.name} {self.user.surname}",
-            count=1000
+            count=5
         )
         logger.info(f"VK find {users['count']} count of users...")
         return users
