@@ -24,7 +24,7 @@ def get_users_data(users: List[dict]) -> List[UserSchema]:
             logger.warning(_ex)
             logger.info("User not has country")
         try:
-            city = user['country']['title']
+            city = user['city']['title']
         except Exception as _ex:
             city = "нет"
             logger.warning(_ex)
