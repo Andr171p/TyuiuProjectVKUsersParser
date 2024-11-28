@@ -1,2 +1,0 @@
-class VkAuthToken:
-    TOKEN = "vk1.a.FDdFRA-6VbjS0Ried3VAvqdPpD1j0aV7ryzi02wCN_fYB7tfDA8x9UfbGH1TMq1WQTmDtubrKgtyL9wRu1DZeKtV6wMLDUvZGK5WDcomQ3Qtk-DSmGiUEXeOA_6G7gQzXP5Y4yHB7VvqSqDpmibayteHooV9neikAY0fnpPPeQSMXG51LrT0GcVYT3qa7cibbqj-0NmuBvZxZp1IhDZhag"
